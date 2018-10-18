@@ -9,36 +9,37 @@ def main():
     screen_height = 360
     screen = pygame.display.set_mode((screen_width,screen_height))
 
-    image = pygame.image.load("smiley.png")
+    smiley = pygame.image.load("smiley.png").convert()
+    smileyrect = createLargerImageRects(smiley, 5)
 
     running = True
 
     clock = pygame.time.Clock()
 
-    xpos=50
-    ypos=50
-
-    step_x=10
-    step_y=10
+    speed = [5,5]
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        if xpos>screen_width-64 or xpos<0:
-            step_x = -step_x
-        if ypos>screen_height-64 or ypos<0:
-            step_y = -step_y
+        smileyrect = smileyrect.move(speed)
 
-        xpos += step_x
-        ypos += step_y
+        if smileyrect.right>screen_width or smileyrect.left<0:
+            speed[0] = -speed[0]
+        if smileyrect.bottom>screen_height or smileyrect.top<0:
+            speed[1] = -speed[1]
 
-        screen.blit(image, (xpos,ypos))
-        pygame.display.flip()
+        print(smileyrect.top)
+        screen.fill((0,0,0))
+        screen.blit(smiley, smileyrect)
+        pygame.display.update(smileyrect)
 
-        clock.tick(10)
+        clock.tick(60)
 
+def createLargerImageRects(image, size):
+    rectangle = image.get_rect()
+    return pygame.Rect(rectangle.left - size, rectangle.top - size, rectangle.width + size*2, rectangle.height + size*2)
 
 
 if __name__=="__main__":
