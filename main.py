@@ -16,19 +16,21 @@ def main():
 
     clock = pygame.time.Clock()
 
-    speed = [5,5]
+    speed = 5
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        smileyrect = smileyrect.move(speed)
-
-        if smileyrect.right>screen_width or smileyrect.left<0:
-            speed[0] = -speed[0]
-        if smileyrect.bottom>screen_height or smileyrect.top<0:
-            speed[1] = -speed[1]
+        if (pygame.key.get_pressed(pygame.K_RIGHT)):
+            smileyrect = smileyrect.move([speed,0])
+        if (pygame.key.get_pressed(pygame.K_LEFT)):
+            smileyrect = smileyrect.move([-speed,0])
+        if (pygame.key.get_pressed(pygame.K_UP)):
+            smileyrect = smileyrect.move([0, -speed])
+        if (pygame.key.get_pressed(pygame.K_DOWN)):
+            smileyrect = smileyrect.move([0, speed])
 
         print(smileyrect.top)
         screen.fill((0,0,0))
