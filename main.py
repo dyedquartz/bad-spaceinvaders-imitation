@@ -5,9 +5,10 @@ def main():
 
     pygame.display.set_caption("TEST")
 
-    screen_width = 480
-    screen_height = 360
+    screen_width = 1920
+    screen_height = 1080
     screen = pygame.display.set_mode((screen_width,screen_height))
+    pygame.display.toggle_fullscreen()
 
     smiley = pygame.image.load("smiley.png").convert()
     smileyrect = createLargerImageRects(smiley, 5)
@@ -16,21 +17,24 @@ def main():
 
     clock = pygame.time.Clock()
 
-    speed = 5
+    speed = 2
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        if (pygame.key.get_pressed(pygame.K_RIGHT)):
+        if (pygame.key.get_pressed()[pygame.K_RIGHT]):
             smileyrect = smileyrect.move([speed,0])
-        if (pygame.key.get_pressed(pygame.K_LEFT)):
+        if (pygame.key.get_pressed()[pygame.K_LEFT]):
             smileyrect = smileyrect.move([-speed,0])
-        if (pygame.key.get_pressed(pygame.K_UP)):
+        if (pygame.key.get_pressed()[pygame.K_UP]):
             smileyrect = smileyrect.move([0, -speed])
-        if (pygame.key.get_pressed(pygame.K_DOWN)):
+        if (pygame.key.get_pressed()[pygame.K_DOWN]):
             smileyrect = smileyrect.move([0, speed])
+
+        if (pygame.key.get_pressed()[pygame.K_F11]):
+            pygame.display.toggle_fullscreen()
 
         print(smileyrect.top)
         screen.fill((0,0,0))
