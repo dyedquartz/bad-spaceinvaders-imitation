@@ -2,7 +2,7 @@ import pygame
 
 def main():
 
-    #Init screen in fullscreen
+    #Init screen
     pygame.init()
     pygame.display.set_caption("TEST")
     screen_width = 1080
