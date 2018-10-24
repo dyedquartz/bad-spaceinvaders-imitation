@@ -7,12 +7,16 @@ def main():
     pygame.display.set_caption("TEST")
     screen_width = 1080
     screen_height = 720
-    screen = pygame.display.set_mode((screen_width,screen_height))
+    screen = pygame.display.set_mode((screen_width, screen_height))
     #pygame.display.toggle_fullscreen()
 
     #Characters and Images
     smiley = pygame.image.load("smiley.png").convert()
     smileyrect = createLargerImageRects(smiley, 5)
+
+    player = pygame.image.load("MiniStevenRight.png")#.convert()
+    playerRect = createLargerImageRects(player, 5)
+    playerOrientation = "Right"
 
     clock = pygame.time.Clock()
 
@@ -29,13 +33,15 @@ def main():
         ##INPUT
         #Character Input
         if (pygame.key.get_pressed()[pygame.K_RIGHT]):
-            smileyrect = smileyrect.move([speed,0])
+            playerRect = playerRect.move([speed,0])
+            playerOrientation = "Right"
         if (pygame.key.get_pressed()[pygame.K_LEFT]):
-            smileyrect = smileyrect.move([-speed,0])
+            playerRect = playerRect.move([-speed,0])
+            playerOrientation = "Left"
         if (pygame.key.get_pressed()[pygame.K_UP]):
-            smileyrect = smileyrect.move([0, -speed])
+            playerRect = playerRect.move([0, -speed])
         if (pygame.key.get_pressed()[pygame.K_DOWN]):
-            smileyrect = smileyrect.move([0, speed])
+            playerRect = playerRect.move([0, speed])
 
         #Utility Input
         if (pygame.key.get_pressed()[pygame.K_F11]):
@@ -43,12 +49,16 @@ def main():
         if (pygame.key.get_pressed()[pygame.K_q]):
             running = False
 
-        #blits background and character
-        screen.fill((0,0,0))
-        screen.blit(smiley, smileyrect)
+        #blits background and characters
+        screen.fill((255, 255, 255))
+
+        if (playerOrientation == "Right"):
+            screen.blit(player, playerRect)
+        elif (playerOrientation == "Left"):
+            screen.blit(pygame.transform.flip(player, True, False), playerRect)
 
         #Updates Screen
-        pygame.display.update(smileyrect)
+        pygame.display.update()
 
         #yeet, 60fps
         clock.tick(60)
